@@ -31,7 +31,7 @@ Game.define(
 			var s = that._sides[2];
 			var w = that._sides[3];
 
-			that._sides = [ e, s, w, n];
+			that._sides = [e, s, w, n];
 
 			if (that._imagePosition == 0) that._imagePosition = 3;
 			else that._imagePosition -= 1;
@@ -45,7 +45,7 @@ Game.define(
 			var s = that._sides[2];
 			var w = that._sides[3];
 
-			that._sides = [ w, n, e, s];
+			that._sides = [w, n, e, s];
 
 			if (that._imagePosition == 3) that._imagePosition = 0;
 			else that._imagePosition += 1;

@@ -5,6 +5,7 @@ window.Game = {
 	_modules: {},
 	_gameLocation: "game/",
 	_main: null,
+	_backgroundImage: null,
 	_keyPressed: null,
 	_dropBlock: false,
 
@@ -48,6 +49,9 @@ window.Game = {
 		var that = this;
 
 		this._canvas = document.getElementById("game-canvas");
+
+		this._backgroundImage = new Image();
+		this._backgroundImage.src = "libs/images/background.png?" + new Date();
 
 		this.loadScript("Main");
 
@@ -144,7 +148,11 @@ window.Game = {
 	},
 
 	draw: function() {
-		this._canvas.getContext("2d").clearRect(0,0,this._canvas.width,this._canvas.height);
+		var context = this._canvas.getContext("2d");
+
+		context.clearRect(0,0,this._canvas.width,this._canvas.height);
+		context.drawImage(this._backgroundImage,0,0);
+
 		this._main.draw();
 	}
 };
