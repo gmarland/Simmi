@@ -19,7 +19,8 @@ Game.define(
 			if (that._initialized) {
 				var context = that._canvas.getContext('2d');
 
-				context.fillText("Score: " + that._score, 20, 25);
+				context.font="bold 16px sans-serif";
+				context.fillText("Score: " + that._score, 20, 30);
 			}
 		};
 	}

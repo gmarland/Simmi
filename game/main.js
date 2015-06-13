@@ -3,7 +3,8 @@ Game
 	"entities.anchor",
 	"entities.block",
 	"entities.score",
-	"entities.preview"
+	"entities.preview",
+	"entities.button"
 )
 .define(
 	"Main",
@@ -24,6 +25,18 @@ Game
 		this._anchor = Game.create("Anchor");
 		this._anchor.init();
 
+		this._leftButton = Game.create("Button");
+		this._leftButton.init("left", 20, Game.getCanvas().height-this._leftButton.getHeight()-20);
+
+		this._rightButton = Game.create("Button");
+		this._rightButton.init("right", Game.getCanvas().width-this._rightButton.getWidth()-20, Game.getCanvas().height-this._rightButton.getHeight()-20);
+
+		this._explodeButton = Game.create("Button");
+		this._explodeButton.init("explode", 20, this._leftButton.getLocationY()-this._explodeButton.getHeight()-20);
+
+		this._downButton = Game.create("Button");
+		this._downButton.init("down", Game.getCanvas().width-this._downButton.getWidth()-20, this._rightButton.getLocationY()-this._downButton.getHeight()-20);
+
 		this._shapes = [ "yellow", "blue", "grey", "green" ];
 		this._directions = [ "n", "s", "e", "w" ];
 
@@ -42,6 +55,27 @@ Game
 				that._gameOver = true;
 			}
 			else {
+				var touched = Game.getTouched();
+
+				if (!touched) {
+					if (that._currentBlock) that._currentBlock.setDropBlock(false);
+
+					var lastTouched = Game.getLastTouched();
+
+					if (lastTouched) {
+						if (that._leftButton.isTouching(lastTouched.x, lastTouched.y)) that._anchor.rotateLeft();
+						if (that._rightButton.isTouching(lastTouched.x, lastTouched.y)) that._anchor.rotateRight();
+						if (that._explodeButton.isTouching(lastTouched.x, lastTouched.y)) that._anchor.clearSymmetry();
+
+						Game.clearLastTouched();
+					}
+				}
+				else {
+					if (this._downButton.isTouching(touched.x, touched.y)) {
+						if (that._currentBlock) that._currentBlock.setDropBlock(true);
+					}
+				}
+
 				that._anchor.update();
 
 				if (!that._currentBlock) {
@@ -78,6 +112,11 @@ Game
 			}
 
 			that._score.draw();
+
+			this._leftButton.draw();
+			this._rightButton.draw();
+			this._explodeButton.draw();
+			this._downButton.draw();
 		};
 
 		return this;

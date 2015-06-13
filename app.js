@@ -6,7 +6,10 @@ window.Game = {
 	_gameLocation: "game/",
 	_main: null,
 	_backgroundImage: null,
-	_keyPressed: null,
+	_touchX: null,
+	_touchY: null,
+	_lastTouchedX: null,
+	_lastTouchedY: null,
 	_dropBlock: false,
 
 	$: function( selector ) {
@@ -29,16 +32,28 @@ window.Game = {
 		return new this._modules[name]();
 	},
 
-	getDropBlock: function() {
-		return this._dropBlock;
+	getTouched: function() {
+		if (this._touchX && this._touchY) {
+			return {
+				x: this._touchX,
+				y: this._touchY
+			};
+		}
+		else {
+			return null;
+		}
 	},
 
-	getKeyPressed: function() {
-		return this._keyPressed;
+	getLastTouched: function() {
+		return {
+			x: this._lastTouchedX,
+			y: this._lastTouchedY
+		};
 	},
 
-	clearKeyPressed: function() {
-		this._keyPressed = null;
+	clearLastTouched: function() {
+		this._lastTouchedX = null;
+		this._lastTouchedY = null;
 	},
 
 	addScore: function(score) {
@@ -53,7 +68,7 @@ window.Game = {
 		this._backgroundImage = new Image();
 		this._backgroundImage.src = "libs/images/background.png?" + new Date();
 
-		this.loadScript("Main");
+		this.loadScript("main");
 
 		var scriptLoader = setInterval(function() {
 			if (that._awaitingScriptLoads === 0) {
@@ -61,20 +76,18 @@ window.Game = {
 
 				that._main = new that._modules["Main"]();
 
-	  			document.addEventListener("keydown", function(e) {
-	  				e.preventDefault();
-					e.stopPropagation();
+				that._canvas.addEventListener("mousedown", function(e) {
+					that._touchX = e.pageX;
+					that._touchY = e.pageY;
+				});
 
-					if ((e.keyCode == 40) || (e.keyCode == 38)) that._dropBlock = true;
+				that._canvas.addEventListener("mouseup", function(e) {
+					that._touchX = null;
+					that._touchY = null;
 
-	  				if (e.keyCode == 32) that._keyPressed = "space";
-	  				if (e.keyCode == 37) that._keyPressed = "left";
-	  				if (e.keyCode == 39) that._keyPressed = "right";
-	  			});
-
-	  			document.addEventListener("keyup", function(e) {
-					if ((e.keyCode == 40) || (e.keyCode == 38)) that._dropBlock = false;
-	  			});
+					that._lastTouchedX = e.pageX;
+					that._lastTouchedY = e.pageY;
+				});
 
 				setInterval(that.run(), 0);
 			}

@@ -5,6 +5,8 @@ Game.define(
 
 		this._canvas = Game.getCanvas();
 
+		this._dropBlock = false;
+
 		this._imageHor = new Image();
 		this._imageVert = new Image();
 			
@@ -85,7 +87,11 @@ Game.define(
 				case "e": return null;
 				case "w": return null;
 			}
-		}
+		},
+
+		this.setDropBlock = function(value) {
+			this._dropBlock = value;
+		},
 
 		this.setDirection = function(direction) {
 			that._direction = direction;
@@ -121,7 +127,7 @@ Game.define(
 
 				if (that._falling) {
 					var dropTick = 10;
-					if (Game.getDropBlock()) dropTick = 1;
+					if (this._dropBlock) dropTick = 1;
 
 					if ((that._ticks % dropTick) === 0) {
 						switch (that._direction) {

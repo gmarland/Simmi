@@ -219,17 +219,6 @@ Game.define(
 		};
 
 		this.update = function() {
-			if (that._initialized) {
-				var keyPressed = Game.getKeyPressed();
-
-				if (keyPressed) {
-					Game.clearKeyPressed();
-
-					if (keyPressed == "left") that.rotateLeft();
-					else if (keyPressed == "right") that.rotateRight();
-					else if (keyPressed == "space") that.clearSymmetry();
-				}
-			}
 		};
 
 		this.draw = function() {
