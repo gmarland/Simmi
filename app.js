@@ -4,6 +4,11 @@ window.Game = {
 	_awaitingScriptLoads: 0,
 	_modules: {},
 	_gameLocation: "game/",
+	_soundEffects: {
+		"rotateAnchor": new Audio("libs/sounds/anchor-move.mp3"),
+		"collectBlock": new Audio("libs/sounds/block-collect.mp3"),
+		"clearBlocks": new Audio("libs/sounds/block-clear.mp3")
+	},
 	_main: null,
 	_backgroundImage: null,
 	_touchX: null,
@@ -167,6 +172,17 @@ window.Game = {
 		context.drawImage(this._backgroundImage,0,0);
 
 		this._main.draw();
+	},
+
+	playSound: function(soundFile) {
+		if (this._soundEffects[soundFile]) {
+			var that = this;
+
+			setTimeout(function() {
+				that._soundEffects[soundFile].currentTime = 0;
+				that._soundEffects[soundFile].play();
+			}, 0);
+		}
 	}
 };
 

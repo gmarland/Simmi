@@ -104,6 +104,8 @@ Game.define(
 				that._sides[3][i].setX(that._x - previousHeight);
 				that._sides[3][i].setY((that._y + (that._height/2)) - (that._sides[3][i].getWidth()/2));
 			}
+
+			Game.playSound("rotateAnchor");
 		};
 
 		this.clearSymmetry = function() {
@@ -148,6 +150,7 @@ Game.define(
 				if ((nsScore > 0) && (ewScore > 0)) totalScore = (nsScore + ewScore)*2;
 				else totalScore = nsScore + ewScore;
 
+				Game.playSound("clearBlocks");
 				Game.addScore(totalScore);
 			}
 		}
@@ -216,6 +219,8 @@ Game.define(
 				block.setX(that._x-(that._sides[3].length*block.getHeight())-block.getHeight());
 				that._sides[3].push(block);
 			}
+
+			Game.playSound("collectBlock");
 		};
 
 		this.update = function() {
