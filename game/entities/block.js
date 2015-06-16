@@ -121,13 +121,13 @@ Game.define(
 			return that._blockType;
 		};
 		
-		this.update = function() {
+		this.update = function(level) {
 			if (that._initialized) {
 				that._ticks += 1;
 
 				if (that._falling) {
-					var dropTick = 10;
-					if (this._dropBlock) dropTick = 1;
+					var dropTick = 11-level;
+					if ((dropTick < 0) || (this._dropBlock)) dropTick = 1;
 
 					if ((that._ticks % dropTick) === 0) {
 						switch (that._direction) {

@@ -93,7 +93,7 @@ Game
 					that._preview.setBlock(that._nextBlock);
 				}
 
-				that._currentBlock.update(that._nextBlock);
+				that._currentBlock.update(that._score.getLevel());
 
 				if (that._anchor.isOccupying(that._currentBlock.getDirection(), that._currentBlock.getRelevantX(), that._currentBlock.getRelevantY())) {
 					that._anchor.claimBlock(that._currentBlock);
