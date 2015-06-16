@@ -86,11 +86,15 @@ window.Game = {
 
 				if (iOS || android) {
 					that._canvas.addEventListener("touchstart", function(e) {
+						e.preventDefault();
+
 						that._touchX = e.targetTouches[0].pageX;
 						that._touchY = e.targetTouches[0].pageY;
 					}, false);
 
 					that._canvas.addEventListener("touchend", function(e) {
+						e.preventDefault();
+
 						that._touchX = null;
 						that._touchY = null;
 
