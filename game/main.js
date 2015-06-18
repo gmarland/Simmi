@@ -25,7 +25,7 @@ Game
 		this._preview.init(this._canvas);
 
 		this._anchor = Game.create("Anchor");
-		this._anchor.init(this._canvas);
+		this._anchor.init(this._canvas, this);
 
 		this._leftButton = Game.create("Button");
 		this._leftButton.init(this._canvas, "left", 20, Game.getCanvas().height-this._leftButton.getHeight()-20);

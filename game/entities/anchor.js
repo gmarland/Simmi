@@ -4,6 +4,7 @@ Game.define(
 		var that = this;
 
 		this._canvas = null;
+		this._parent = null;
 
 		this._images = [ new Image(), new Image(), new Image(), new Image() ];
 		this._imagePosition = 0;
@@ -16,8 +17,9 @@ Game.define(
 
 		this._sides = [[],[],[],[]];
 
-		this.init = function(canvas) {
+		this.init = function(canvas, parent) {
 			this._canvas = canvas;
+			this._parent = parent;
 
 			this._x = (this._canvas.width/2) - (this._width/2);
 			this._y = (this._canvas.height/2) - (this._height/2);
@@ -156,7 +158,8 @@ Game.define(
 				else totalScore = nsScore + ewScore;
 
 				Game.playSound("clearBlocks");
-				Game.addScore(totalScore);
+
+				that._parent.addScore(totalScore);
 			}
 		}
 

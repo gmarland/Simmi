@@ -9,7 +9,7 @@ window.Game = {
 		"collectBlock": new Audio("libs/sounds/block-collect.mp3"),
 		"clearBlocks": new Audio("libs/sounds/block-clear.mp3")
 	},
-	_main: null,
+	_loaded: null,
 	_backgroundImage: null,
 	_touchX: null,
 	_touchY: null,
@@ -60,7 +60,7 @@ window.Game = {
 	},
 
 	addScore: function(score) {
-		if (this._main) this._main.addScore(score);
+		if (this._loaded) this._loaded.addScore(score);
 	},
 
 	init: function() {
@@ -80,7 +80,7 @@ window.Game = {
 			if (that._awaitingScriptLoads === 0) {
           		window.clearInterval(scriptLoader);
 
-				that._main = new that._modules["Main"]();
+				that._loaded = new that._modules["Main"]();
 
 				if (iOS || android) {
 					that._canvas.addEventListener("touchstart", function(e) {
@@ -183,7 +183,7 @@ window.Game = {
 	},
 
 	update: function() {
-		this._main.update();
+		this._loaded.update();
 	},
 
 	draw: function() {
@@ -192,7 +192,7 @@ window.Game = {
 		context.clearRect(0,0,this._canvas.width,this._canvas.height);
 		context.drawImage(this._backgroundImage,0,0);
 
-		this._main.draw();
+		this._loaded.draw();
 	},
 
 	playSound: function(soundFile) {
