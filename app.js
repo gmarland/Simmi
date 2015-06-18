@@ -74,13 +74,13 @@ window.Game = {
 		var iOS = navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false,
 			android = navigator.userAgent.match(/Android/i) ? true : false;
 
-		this.loadScript("main");
+		this.loadScript("level2");
 
 		var scriptLoader = setInterval(function() {
 			if (that._awaitingScriptLoads === 0) {
           		window.clearInterval(scriptLoader);
 
-				that._loaded = new that._modules["Main"]();
+				that._loaded = new that._modules["Level2"]();
 
 				if (iOS || android) {
 					that._canvas.addEventListener("touchstart", function(e) {

@@ -17,6 +17,8 @@ Game.define(
 
 		this._sides = [[],[],[],[]];
 
+		this._disabledSides = [];
+
 		this.init = function(canvas, parent) {
 			this._canvas = canvas;
 			this._parent = parent;
@@ -32,6 +34,15 @@ Game.define(
 			that._initialized = true;
 		};
 
+		this.setDisabledSides = function(sides) {
+			if (sides) {
+				if (sides.indexOf("n") !== -1) that._disabledSides.push(0);
+				if (sides.indexOf("e") !== -1) that._disabledSides.push(1);
+				if (sides.indexOf("s") !== -1) that._disabledSides.push(2);
+				if (sides.indexOf("w") !== -1) that._disabledSides.push(3);
+			}
+		};
+
 		this.rotateLeft = function() {
 			var n = that._sides[0];
 			var e = that._sides[1];
@@ -39,6 +50,11 @@ Game.define(
 			var w = that._sides[3];
 
 			that._sides = [e, s, w, n];
+
+			for (var i=0; i<that._disabledSides.length; i++) {
+				that._disabledSides[i]--;
+				if (that._disabledSides[i] < 0) that._disabledSides[i] = 3;
+			}
 
 			if (that._imagePosition == 0) that._imagePosition = 3;
 			else that._imagePosition -= 1;
@@ -53,6 +69,11 @@ Game.define(
 			var w = that._sides[3];
 
 			that._sides = [w, n, e, s];
+
+			for (var i=0; i<that._disabledSides.length; i++) {
+				that._disabledSides[i]++;
+				if (that._disabledSides[i] > 3) that._disabledSides[i] = 0;
+			}
 
 			if (that._imagePosition == 3) that._imagePosition = 0;
 			else that._imagePosition += 1;
@@ -209,27 +230,35 @@ Game.define(
 		};
 
 		this.claimBlock = function(block) {
-			var direction = block.getDirection();
-
-			if (direction == "n") {
-				block.setY(that._y-(that._sides[0].length*block.getHeight())-block.getHeight());
-				that._sides[0].push(block);
-			}
-			else if (direction == "e") {
-				block.setX((that._x+that._width)+(that._sides[1].length*block.getHeight()));
-				that._sides[1].push(block);
-			}
-			else if (direction == "s") {
-				block.setY((that._y+that._height)+(that._sides[2].length*block.getHeight()));
-				that._sides[2].push(block);
-			}
-			else if (direction == "w") {
-				block.setX(that._x-(that._sides[3].length*block.getHeight())-block.getHeight());
-				that._sides[3].push(block);
-			}
+			that.addBlock(block);
 
 			Game.playSound("collectBlock");
 			that.clearSymmetry();
+		};
+
+		this.addBlock = function(block) {
+			var direction = block.getDirection();
+
+			if ((direction == "n") && (that._disabledSides.indexOf(0) === -1)) {
+				block.setY(that._y-(that._sides[0].length*block.getHeight())-block.getHeight());
+				that._sides[0].push(block);
+			}
+			else if ((direction == "e") && (that._disabledSides.indexOf(1) === -1)) {
+				block.setX((that._x+that._width)+(that._sides[1].length*block.getHeight()));
+				that._sides[1].push(block);
+			}
+			else if ((direction == "s") && (that._disabledSides.indexOf(2) === -1)) {
+				block.setY((that._y+that._height)+(that._sides[2].length*block.getHeight()));
+				that._sides[2].push(block);
+			}
+			else if ((direction == "w") && (that._disabledSides.indexOf(3) === -1)) {
+				block.setX(that._x-(that._sides[3].length*block.getHeight())-block.getHeight());
+				that._sides[3].push(block);
+			}
+		};
+
+		this.getBlocksCleared = function(direction) {
+			return ((that._sides[0].length === 0) && (that._sides[1].length === 0) && (that._sides[2].length === 0) && (that._sides[3].length === 0));
 		};
 
 		this.update = function() {

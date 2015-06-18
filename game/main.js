@@ -18,6 +18,9 @@ Game
 		this._currentBlock = null;
 		this._gameOver = false;
 
+		this._shapes = [ "yellow", "blue", "grey", "green" ];
+		this._directions = [ "n", "s", "e", "w" ];
+
 		this._score = Game.create("Score");
 		this._score.init(this._canvas);
 
@@ -35,9 +38,6 @@ Game
 
 		this._downButton = Game.create("Button");
 		this._downButton.init(this._canvas, "down", Game.getCanvas().width-this._downButton.getWidth()-20, this._rightButton.getLocationY()-this._downButton.getHeight()-20);
-
-		this._shapes = [ "yellow", "blue", "grey", "green" ];
-		this._directions = [ "n", "s", "e", "w" ];
 
 		this.addScore = function(score) {
 			if (that._score) that._score.addScore(score);
