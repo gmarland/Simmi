@@ -3,14 +3,15 @@ Game.define(
 	function() {
 		var that = this;
 
+		this._canvas = null;
+
 		this._previewContainer = new Image();
 		that._previewContainer.src = "libs/images/previewContainter.png?" + new Date();
 
 		that._block = null;
 
-		this._canvas = Game.getCanvas();
-
-		this.init = function() {
+		this.init = function(canvas) {
+			this._canvas = canvas;
 		};
 		
 		this.setBlock = function(block) {

@@ -3,7 +3,7 @@ Game.define(
 	function() { 
 		var that = this;
 
-		this._canvas = Game.getCanvas();
+		this._canvas = null;
 
 		this._images = [ new Image(), new Image(), new Image(), new Image() ];
 		this._imagePosition = 0;
@@ -11,18 +11,23 @@ Game.define(
 		this._width = 100;
 		this._height = 100;
 
-		this._x = (this._canvas.width/2) - (this._width/2);
-		this._y = (this._canvas.height/2) - (this._height/2);
+		this._x = 0;
+		this._y = 0;
 
 		this._sides = [[],[],[],[]];
 
-		this.init = function() {
-			that._initialized = true;
+		this.init = function(canvas) {
+			this._canvas = canvas;
+
+			this._x = (this._canvas.width/2) - (this._width/2);
+			this._y = (this._canvas.height/2) - (this._height/2);
 
 			that._images[0].src = "libs/images/anchor0.png?" + new Date();
 			that._images[1].src = "libs/images/anchor90.png?" + new Date();
 			that._images[2].src = "libs/images/anchor180.png?" + new Date();
 			that._images[3].src = "libs/images/anchor270.png?" + new Date();
+			
+			that._initialized = true;
 		};
 
 		this.rotateLeft = function() {
@@ -221,6 +226,7 @@ Game.define(
 			}
 
 			Game.playSound("collectBlock");
+			that.clearSymmetry();
 		};
 
 		this.update = function() {

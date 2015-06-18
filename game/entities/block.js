@@ -3,7 +3,7 @@ Game.define(
 	function() { 
 		var that = this;
 
-		this._canvas = Game.getCanvas();
+		this._canvas = null;
 
 		this._dropBlock = false;
 
@@ -18,7 +18,9 @@ Game.define(
 		this._falling = true;
 		this._ticks = 0;
 
-		this.init = function(type,direction) {			
+		this.init = function(canvas, type, direction) {
+			this._canvas = canvas;
+
 			that._blockType = type;
 			that._direction = direction;
 

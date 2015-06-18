@@ -11,31 +11,30 @@ Game
 	function() { 
 		var that = this;
 
+		this._canvas = Game.getCanvas();
+
 		this._blocks =  [],
 		this._nextBlock = null;
 		this._currentBlock = null;
 		this._gameOver = false;
 
 		this._score = Game.create("Score");
-		this._score.init();
+		this._score.init(this._canvas);
 
 		this._preview = Game.create("Preview");
-		this._preview.init();
+		this._preview.init(this._canvas);
 
 		this._anchor = Game.create("Anchor");
-		this._anchor.init();
+		this._anchor.init(this._canvas);
 
 		this._leftButton = Game.create("Button");
-		this._leftButton.init("left", 20, Game.getCanvas().height-this._leftButton.getHeight()-20);
+		this._leftButton.init(this._canvas, "left", 20, Game.getCanvas().height-this._leftButton.getHeight()-20);
 
 		this._rightButton = Game.create("Button");
-		this._rightButton.init("right", Game.getCanvas().width-this._rightButton.getWidth()-20, Game.getCanvas().height-this._rightButton.getHeight()-20);
-
-		this._explodeButton = Game.create("Button");
-		this._explodeButton.init("explode", 20, this._leftButton.getLocationY()-this._explodeButton.getHeight()-20);
+		this._rightButton.init(this._canvas, "right", Game.getCanvas().width-this._rightButton.getWidth()-20, Game.getCanvas().height-this._rightButton.getHeight()-20);
 
 		this._downButton = Game.create("Button");
-		this._downButton.init("down", Game.getCanvas().width-this._downButton.getWidth()-20, this._rightButton.getLocationY()-this._downButton.getHeight()-20);
+		this._downButton.init(this._canvas, "down", Game.getCanvas().width-this._downButton.getWidth()-20, this._rightButton.getLocationY()-this._downButton.getHeight()-20);
 
 		this._shapes = [ "yellow", "blue", "grey", "green" ];
 		this._directions = [ "n", "s", "e", "w" ];
@@ -65,7 +64,6 @@ Game
 					if (lastTouched) {
 						if (that._leftButton.isTouching(lastTouched.x, lastTouched.y)) that._anchor.rotateLeft();
 						if (that._rightButton.isTouching(lastTouched.x, lastTouched.y)) that._anchor.rotateRight();
-						if (that._explodeButton.isTouching(lastTouched.x, lastTouched.y)) that._anchor.clearSymmetry();
 
 						Game.clearLastTouched();
 					}
@@ -84,11 +82,11 @@ Game
 					}
 					else {
 						that._currentBlock = Game.create("Block");
-						that._currentBlock.init(that._shapes[Game.getRandomInt(0,3)], that._directions[Game.getRandomInt(0,3)]);
+						that._currentBlock.init(this._canvas, that._shapes[Game.getRandomInt(0,3)], that._directions[Game.getRandomInt(0,3)]);
 					}
 
 					that._nextBlock = Game.create("Block");
-					that._nextBlock.init(that._shapes[Game.getRandomInt(0,3)], that._directions[Game.getRandomInt(0,3)]);
+					that._nextBlock.init(this._canvas, that._shapes[Game.getRandomInt(0,3)], that._directions[Game.getRandomInt(0,3)]);
 
 					that._preview.setBlock(that._nextBlock);
 				}
@@ -115,7 +113,6 @@ Game
 
 			this._leftButton.draw();
 			this._rightButton.draw();
-			this._explodeButton.draw();
 			this._downButton.draw();
 		};
 

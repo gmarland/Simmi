@@ -3,7 +3,7 @@ Game.define(
 	function() {
 		var that = this;
 
-		this._canvas = Game.getCanvas();
+		this._canvas = null;
 
 		this._image = new Image();
 
@@ -13,7 +13,9 @@ Game.define(
 		this._locationX = null;
 		this._locationY = null;
 
-		this.init = function(type, locationX, locationY) {			
+		this.init = function(canvas, type, locationX, locationY) {
+			this._canvas = canvas;
+
 			that._type = type;
 
 			that._image.src = "libs/images/" + type + "Button.png?" + new Date();

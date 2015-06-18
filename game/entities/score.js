@@ -10,9 +10,11 @@ Game.define(
 		this._level = 1;
 		this._nextLevel = that._levelMultiplier;
 
-		this._canvas = Game.getCanvas();
+		this._canvas = null;
 		
-		this.init = function() {
+		this.init = function(canvas) {
+			this._canvas = canvas
+
 			that._initialized = true;
 		};
 
@@ -36,7 +38,6 @@ Game.define(
 
 				context.font="bold 16px sans-serif";
 				context.fillText("Score: " + that._score, 20, 30);
-				context.fillText("Level: " + that._level, 20, 55);
 			}
 		};
 	}

@@ -44,9 +44,7 @@ window.Game = {
 				y: this._touchY
 			};
 		}
-		else {
-			return null;
-		}
+		else return null;
 	},
 
 	getLastTouched: function() {
