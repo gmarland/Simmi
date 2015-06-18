@@ -7,7 +7,7 @@ Game
 	"entities.button"
 )
 .define(
-	"Level1",
+	"level1",
 	function() { 
 		var that = this;
 
@@ -127,6 +127,18 @@ Game
 			this._leftButton.draw();
 			this._rightButton.draw();
 			this._downButton.draw();
+		};
+
+		this.destroy = function() {
+			startingBlock1 = null;
+			startingBlock2 = null;
+			startingBlock3 = null;
+
+			this._preview = null;
+			this._anchor = null;
+			this._leftButton = null;
+			this._rightButton = null;
+			this._downButton = null;
 		};
 
 		return this;

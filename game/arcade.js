@@ -7,7 +7,7 @@ Game
 	"entities.button"
 )
 .define(
-	"Main",
+	"arcade",
 	function() { 
 		var that = this;
 
@@ -114,6 +114,15 @@ Game
 			this._leftButton.draw();
 			this._rightButton.draw();
 			this._downButton.draw();
+		};
+
+		this.destroy = function() {
+			this._score = null;
+			this._preview = null;
+			this._anchor = null;
+			this._leftButton = null;
+			this._rightButton = null;
+			this._downButton = null;
 		};
 
 		return this;

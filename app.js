@@ -74,46 +74,57 @@ window.Game = {
 		var iOS = navigator.userAgent.match(/(iPad|iPhone|iPod)/g) ? true : false,
 			android = navigator.userAgent.match(/Android/i) ? true : false;
 
-		this.loadScript("level4");
+		if (iOS || android) {
+			that._canvas.addEventListener("touchstart", function(e) {
+				e.preventDefault();
+
+				that._touchX = e.targetTouches[0].pageX;
+				that._touchY = e.targetTouches[0].pageY;
+			}, false);
+
+			that._canvas.addEventListener("touchend", function(e) {
+				e.preventDefault();
+
+				that._touchX = null;
+				that._touchY = null;
+
+				that._lastTouchedX = e.pageX;
+				that._lastTouchedY = e.pageY;
+			}, false);
+		}
+		else {
+			that._canvas.addEventListener("mousedown", function(e) {
+				that._touchX = e.pageX;
+				that._touchY = e.pageY;
+			});
+
+			that._canvas.addEventListener("mouseup", function(e) {
+				that._touchX = null;
+				that._touchY = null;
+
+				that._lastTouchedX = e.pageX;
+				that._lastTouchedY = e.pageY;
+			});
+		}
+
+		this.loadLevel("level3");
+	},
+
+	loadLevel: function(level) {
+		var that = this;
+
+		if (this._loaded) {
+			this._loaded.destroy();
+			this._loaded = null;
+		}
+
+		this.loadScript(level);
 
 		var scriptLoader = setInterval(function() {
 			if (that._awaitingScriptLoads === 0) {
           		window.clearInterval(scriptLoader);
 
-				that._loaded = new that._modules["Level4"]();
-
-				if (iOS || android) {
-					that._canvas.addEventListener("touchstart", function(e) {
-						e.preventDefault();
-
-						that._touchX = e.targetTouches[0].pageX;
-						that._touchY = e.targetTouches[0].pageY;
-					}, false);
-
-					that._canvas.addEventListener("touchend", function(e) {
-						e.preventDefault();
-
-						that._touchX = null;
-						that._touchY = null;
-
-						that._lastTouchedX = e.pageX;
-						that._lastTouchedY = e.pageY;
-					}, false);
-				}
-				else {
-					that._canvas.addEventListener("mousedown", function(e) {
-						that._touchX = e.pageX;
-						that._touchY = e.pageY;
-					});
-
-					that._canvas.addEventListener("mouseup", function(e) {
-						that._touchX = null;
-						that._touchY = null;
-
-						that._lastTouchedX = e.pageX;
-						that._lastTouchedY = e.pageY;
-					});
-				}
+				that._loaded = new that._modules[level]();
 
 				setInterval(that.run(), 0);
 			}
