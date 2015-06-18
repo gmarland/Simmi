@@ -27,21 +27,25 @@ Game
 
 		this._anchor = Game.create("Anchor");
 		this._anchor.init(this._canvas, this);
-		this._anchor.setDisabledSides([ "e", "w" ]);
+		this._anchor.setDisabledSides([ "n", "s" ]);
 
 		// Add starting blocks
 
 		var startingBlock1 = Game.create("Block");
-		startingBlock1.init(that._canvas, that._shapes[0], "s");
+		startingBlock1.init(that._canvas, that._shapes[0], "e");
 		this._anchor.addBlock(startingBlock1);
 
 		var startingBlock2 = Game.create("Block");
-		startingBlock2.init(that._canvas, that._shapes[1], "s");
+		startingBlock2.init(that._canvas, that._shapes[1], "e");
 		this._anchor.addBlock(startingBlock2);
 
 		var startingBlock3 = Game.create("Block");
-		startingBlock3.init(that._canvas, that._shapes[0], "s");
+		startingBlock3.init(that._canvas, that._shapes[1], "e");
 		this._anchor.addBlock(startingBlock3);
+
+		var startingBlock4 = Game.create("Block");
+		startingBlock4.init(that._canvas, that._shapes[0], "e");
+		this._anchor.addBlock(startingBlock4);
 
 		this._leftButton = Game.create("Button");
 		this._leftButton.init(this._canvas, "left", 20, Game.getCanvas().height-this._leftButton.getHeight()-20);

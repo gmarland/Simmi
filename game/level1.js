@@ -27,6 +27,21 @@ Game
 
 		this._anchor = Game.create("Anchor");
 		this._anchor.init(this._canvas, this);
+		this._anchor.setDisabledSides([ "e", "w" ]);
+
+		// Add starting blocks
+
+		var startingBlock1 = Game.create("Block");
+		startingBlock1.init(that._canvas, that._shapes[0], "s");
+		this._anchor.addBlock(startingBlock1);
+
+		var startingBlock2 = Game.create("Block");
+		startingBlock2.init(that._canvas, that._shapes[1], "s");
+		this._anchor.addBlock(startingBlock2);
+
+		var startingBlock3 = Game.create("Block");
+		startingBlock3.init(that._canvas, that._shapes[0], "s");
+		this._anchor.addBlock(startingBlock3);
 
 		this._leftButton = Game.create("Button");
 		this._leftButton.init(this._canvas, "left", 20, Game.getCanvas().height-this._leftButton.getHeight()-20);
@@ -37,8 +52,9 @@ Game
 		this._downButton = Game.create("Button");
 		this._downButton.init(this._canvas, "down", Game.getCanvas().width-this._downButton.getWidth()-20, this._rightButton.getLocationY()-this._downButton.getHeight()-20);
 
+
 		this.addScore = function(score) {
-			that._levelComplete = true;
+			if (that._anchor.getBlocksCleared()) that._levelComplete = true;
 		};
 
 		this.update = function() {

@@ -7,7 +7,7 @@ Game
 	"entities.button"
 )
 .define(
-	"Level3",
+	"Level4",
 	function() { 
 		var that = this;
 
@@ -27,49 +27,24 @@ Game
 
 		this._anchor = Game.create("Anchor");
 		this._anchor.init(this._canvas, this);
-		this._anchor.setDisabledSides([ "e", "w" ]);
 
 		// Add starting blocks
 
 		var startingBlock1 = Game.create("Block");
-		startingBlock1.init(that._canvas, that._shapes[0], "n");
+		startingBlock1.init(that._canvas, that._shapes[0], "s");
 		this._anchor.addBlock(startingBlock1);
 
 		var startingBlock2 = Game.create("Block");
-		startingBlock2.init(that._canvas, that._shapes[1], "n");
+		startingBlock2.init(that._canvas, that._shapes[1], "s");
 		this._anchor.addBlock(startingBlock2);
 
 		var startingBlock3 = Game.create("Block");
-		startingBlock3.init(that._canvas, that._shapes[1], "n");
+		startingBlock3.init(that._canvas, that._shapes[1], "e");
 		this._anchor.addBlock(startingBlock3);
 
 		var startingBlock4 = Game.create("Block");
-		startingBlock4.init(that._canvas, that._shapes[0], "n");
+		startingBlock4.init(that._canvas, that._shapes[0], "e");
 		this._anchor.addBlock(startingBlock4);
-
-		var startingBlock5 = Game.create("Block");
-		startingBlock5.init(that._canvas, that._shapes[0], "n");
-		this._anchor.addBlock(startingBlock5);
-
-		var startingBlock6 = Game.create("Block");
-		startingBlock6.init(that._canvas, that._shapes[0], "n");
-		this._anchor.addBlock(startingBlock6);
-
-		var startingBlock7 = Game.create("Block");
-		startingBlock7.init(that._canvas, that._shapes[1], "n");
-		this._anchor.addBlock(startingBlock7);
-
-		var startingBlock8 = Game.create("Block");
-		startingBlock8.init(that._canvas, that._shapes[1], "n");
-		this._anchor.addBlock(startingBlock8);
-
-		var startingBlock9 = Game.create("Block");
-		startingBlock9.init(that._canvas, that._shapes[0], "n");
-		this._anchor.addBlock(startingBlock9);
-
-		var startingBlock10 = Game.create("Block");
-		startingBlock10.init(that._canvas, that._shapes[1], "n");
-		this._anchor.addBlock(startingBlock10);
 
 		this._leftButton = Game.create("Button");
 		this._leftButton.init(this._canvas, "left", 20, Game.getCanvas().height-this._leftButton.getHeight()-20);
