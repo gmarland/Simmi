@@ -107,7 +107,7 @@ window.Game = {
 			});
 		}
 
-		this.loadLevel("level3");
+		this.loadLevel("splash");
 	},
 
 	loadLevel: function(level) {
